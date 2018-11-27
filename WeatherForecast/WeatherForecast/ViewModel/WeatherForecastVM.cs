@@ -3,6 +3,7 @@ using WeatherForecast.DAL;
 using WeatherForecast.Model;
 using WeatherForecast.ViewModel.BaseClasses;
 using System.Threading.Tasks;
+using Unity;
 
 namespace WeatherForecast.ViewModel
 {
@@ -11,8 +12,29 @@ namespace WeatherForecast.ViewModel
     /// </summary>
     public class WeatherForecastVM : ViewModelBase
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public WeatherForecastVM()
+        {
+            objectContainer = new UnityContainer();
+            objectContainer.RegisterType<IDataCollector, LiveDataCollector>();
+            objectContainer.RegisterType<IDataParser, JSONParser>();
+
+            dataCollector = objectContainer.Resolve<IDataCollector>();
+            dataParser = objectContainer.Resolve<IDataParser>();
+
+            string collectedData = dataCollector.Collect();
+            this.List = new ObservableCollection<List>(dataParser.ParseWeatherForecastData(collectedData).list);
+        }
 
         #region Parameters
+
+        private IUnityContainer objectContainer;
+
+        private IDataParser dataParser;
+
+        private IDataCollector dataCollector;
 
         private ObservableCollection<List> list;
 

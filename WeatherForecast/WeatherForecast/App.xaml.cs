@@ -22,13 +22,7 @@ namespace WeatherForecast
             {
                 WeatherForecastVM weatherForecastVM = new WeatherForecastVM();
 
-                IDataCollector dataCollector = new LiveDataCollector();
-
-                IDataParser dataParser = new JSONParser();
-                weatherForecastVM.List = new System.Collections.ObjectModel.ObservableCollection<Model.List>(dataParser.ParseWeatherForecastData(dataCollector.Collect()).list);
-
                 WeatherForecastView weatherForecastView = new WeatherForecastView(weatherForecastVM);
-
                 weatherForecastView.Show();
             }
             catch (Exception ex)
