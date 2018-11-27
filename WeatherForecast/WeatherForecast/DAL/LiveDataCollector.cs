@@ -50,23 +50,7 @@ namespace WeatherForecast.DAL
             }
             catch (Exception ex)
             {
-                try
-                {
-                    System.Windows.MessageBox.Show("Couldn't get data from the server. " + Environment.NewLine + ex.Message + Environment.NewLine + "Sample data will be displayed.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-
-                    if (File.Exists("sample.txt"))
-                    {
-                        collectedJSON = File.ReadAllText("sample.txt");
-                    }
-                    else
-                    {
-                        System.Windows.MessageBox.Show("Sample file is missing.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                    }
-                }
-                catch (Exception ex2)
-                {
-                    System.Windows.MessageBox.Show("Error during try to read sample data." + ex2.Message, "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                }
+                System.Windows.MessageBox.Show("Error during try to read and process sample data." + ex.Message, "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
 
             return collectedJSON;

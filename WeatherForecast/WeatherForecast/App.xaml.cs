@@ -20,7 +20,7 @@ namespace WeatherForecast
         {
             try
             {
-                WeatherForecastVM weatherForecastVM = new WeatherForecastVM();
+                WeatherForecastVM weatherForecastVM = new WeatherForecastVM(bool.TrueString.Equals(ConfigurationManager.AppSettings["runWithOnlineData"], StringComparison.InvariantCultureIgnoreCase));
 
                 WeatherForecastView weatherForecastView = new WeatherForecastView(weatherForecastVM);
                 weatherForecastView.Show();

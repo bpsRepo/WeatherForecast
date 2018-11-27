@@ -13,12 +13,22 @@ namespace WeatherForecast.ViewModel
     public class WeatherForecastVM : ViewModelBase
     {
         /// <summary>
-        /// Constructor
+        /// Constructor for WeatherForecast ViewModel
         /// </summary>
-        public WeatherForecastVM()
+        /// <param name="useOnlineData">True if it's use online data - otherwise it's use a sample file</param>
+        public WeatherForecastVM(bool useOnlineData)
         {
             objectContainer = new UnityContainer();
-            objectContainer.RegisterType<IDataCollector, LiveDataCollector>();
+
+            if (useOnlineData)
+            {
+                objectContainer.RegisterType<IDataCollector, LiveDataCollector>();                
+            }
+            else
+            {
+                objectContainer.RegisterType<IDataCollector, FileDataCollector>();
+            }
+
             objectContainer.RegisterType<IDataParser, JSONParser>();
         }
 
