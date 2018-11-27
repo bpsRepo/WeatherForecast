@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace WeatherForecast.Model
 {
     /// <summary>
@@ -6,9 +8,16 @@ namespace WeatherForecast.Model
     /// </summary>
     public class Weather
     {
-        public int id { get; set; }
-        public string main { get; set; }
-        public string description { get; set; }
-        public string icon { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public int Id { get; set; }
+
+        [JsonProperty(PropertyName = "main")]
+        public string Main { get; set; }
+
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+
+        [JsonProperty(PropertyName = "icon")]
+        public string Icon { get; set; }
     }
 }

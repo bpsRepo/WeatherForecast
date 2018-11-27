@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace WeatherForecast.Model
 {
     /// <summary>
@@ -6,7 +8,10 @@ namespace WeatherForecast.Model
     /// </summary>
     public class Wind
     {
-        public double speed { get; set; }
-        public double deg { get; set; }
+        [JsonProperty(PropertyName = "speed")]
+        public double Speed { get; set; }
+
+        [JsonProperty(PropertyName = "deg")]
+        public double Deg { get; set; }
     }
 }

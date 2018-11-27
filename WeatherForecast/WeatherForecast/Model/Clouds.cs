@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace WeatherForecast.Model
 {
     /// <summary>
@@ -6,6 +8,7 @@ namespace WeatherForecast.Model
     /// </summary>
     public class Clouds
     {
-        public int all { get; set; }
+        [JsonProperty(PropertyName = "all")]
+        public int All { get; set; }
     }
 }

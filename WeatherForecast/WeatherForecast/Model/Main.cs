@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace WeatherForecast.Model
 {
     /// <summary>
@@ -6,13 +8,28 @@ namespace WeatherForecast.Model
     /// </summary>
     public class Main
     {
-        public double temp { get; set; }
-        public double temp_min { get; set; }
-        public double temp_max { get; set; }
-        public double pressure { get; set; }
-        public double sea_level { get; set; }
-        public double grnd_level { get; set; }
-        public int humidity { get; set; }
-        public double temp_kf { get; set; }
+        [JsonProperty(PropertyName = "temp")]
+        public double Temp { get; set; }
+
+        [JsonProperty(PropertyName = "temp_min")]
+        public double Temp_min { get; set; }
+
+        [JsonProperty(PropertyName = "temp_max")]
+        public double Temp_max { get; set; }
+
+        [JsonProperty(PropertyName = "pressure")]
+        public double Pressure { get; set; }
+
+        [JsonProperty(PropertyName = "sea_level")]
+        public double Sea_level { get; set; }
+
+        [JsonProperty(PropertyName = "grnd_level")]
+        public double Grnd_level { get; set; }
+
+        [JsonProperty(PropertyName = "humidity")]
+        public int Humidity { get; set; }
+
+        [JsonProperty(PropertyName = "temp_kf")]
+        public double Temp_kf { get; set; }
     }
 }

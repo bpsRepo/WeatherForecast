@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace WeatherForecast.Model
 {
     /// <summary>
@@ -6,6 +8,7 @@ namespace WeatherForecast.Model
     /// </summary>
     public class Sys
     {
-        public string pod { get; set; }
+        [JsonProperty(PropertyName = "pod")]
+        public string Pod { get; set; }
     }
 }

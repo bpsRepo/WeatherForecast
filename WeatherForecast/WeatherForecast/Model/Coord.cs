@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace WeatherForecast.Model
 {
     /// <summary>
@@ -6,7 +8,10 @@ namespace WeatherForecast.Model
     /// </summary>
     public class Coord
     {
-        public double lat { get; set; }
-        public double lon { get; set; }
+        [JsonProperty(PropertyName = "lat")]
+        public double Lat { get; set; }
+
+        [JsonProperty(PropertyName = "lon")]
+        public double Lon { get; set; }
     }
 }

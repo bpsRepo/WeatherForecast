@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace WeatherForecast.Model
 {
@@ -7,13 +8,28 @@ namespace WeatherForecast.Model
     /// </summary>
     public class List
     {
-        public int dt { get; set; }
-        public Main main { get; set; }
-        public List<Weather> weather { get; set; }
-        public Clouds clouds { get; set; }
-        public Wind wind { get; set; }
-        public Snow snow { get; set; }
-        public Sys sys { get; set; }
-        public string dt_txt { get; set; }
+        [JsonProperty(PropertyName = "dt")]
+        public int Dt { get; set; }
+
+        [JsonProperty(PropertyName = "main")]
+        public Main Main { get; set; }
+
+        [JsonProperty(PropertyName = "weather")]
+        public List<Weather> Weather { get; set; }
+
+        [JsonProperty(PropertyName = "clouds")]
+        public Clouds Clouds { get; set; }
+
+        [JsonProperty(PropertyName = "wind")]
+        public Wind Wind { get; set; }
+
+        [JsonProperty(PropertyName = "snow")]
+        public Snow Snow { get; set; }
+
+        [JsonProperty(PropertyName = "sys")]
+        public Sys Sys { get; set; }
+
+        [JsonProperty(PropertyName = "dt_txt")]
+        public string Dt_txt { get; set; }
     }
 }
