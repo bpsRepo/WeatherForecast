@@ -34,7 +34,7 @@ namespace WeatherForecast.ViewModel
             return Task.Run(() =>
             {
                 string collectedData = dataCollector.Collect();
-                this.List = new ObservableCollection<List>(dataParser.ParseWeatherForecastData(collectedData).list);
+                this.List = new ObservableCollection<List>(dataParser.ParseWeatherForecastData(collectedData).List);
             });
         }
 

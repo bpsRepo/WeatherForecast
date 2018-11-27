@@ -8,7 +8,7 @@
         xmlns:converters="clr-namespace:WeatherForecast.View.Converters"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="WeatherForecastView" Height="800" Width="800">
+        Title="WeatherForecastView" Height="800" Width="600" MinHeight="400" MinWidth="500">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -40,14 +40,13 @@
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="70" />
                     <ColumnDefinition Width="70" />
-                    <ColumnDefinition Width="70" />
-                    <ColumnDefinition/>
+                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="{Binding dt_txt}" Grid.Column="0" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding main.temp_min, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="1" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap" Foreground="Blue"/>
-                <TextBlock Text="{Binding main.temp, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="2" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding main.temp_max, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="3" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap" Foreground="Red"/>
+                <TextBlock Text="{Binding Dt_txt}" Grid.Column="0" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding Main.Temp_min, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="1" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap" Foreground="Blue"/>
+                <!--<TextBlock Text="{Binding Main.Temp, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="2" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap"/>-->
+                <TextBlock Text="{Binding Main.Temp_max, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="2" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap" Foreground="Red"/>
 
             </Grid>
         </DataTemplate>
@@ -55,7 +54,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Orientation="Vertical"  HorizontalAlignment="Stretch">
@@ -64,13 +63,13 @@
                     <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="70" />
                     <ColumnDefinition Width="70" />
-                    <ColumnDefinition Width="70" />
+                    <!--<ColumnDefinition Width="70" />-->
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Date/Time</Label>
                 <Label Grid.Column="1">Min temp</Label>
-                <Label Grid.Column="2">Avg. temp</Label>
-                <Label Grid.Column="3">Max temp</Label>
+                <!--<Label Grid.Column="2">Avg. temp</Label>-->
+                <Label Grid.Column="2">Max temp</Label>
             </Grid>
             <ListBox x:Name="forecastListBox" Foreground="Gray" BorderThickness="0,1,0,0" ItemContainerStyle="{StaticResource itemStyle}" IsHitTestVisible="true"  ItemsSource="{Binding List}" ItemTemplate="{StaticResource myForecastcastViewerTemplate}" IsManipulationEnabled="True" ScrollViewer.CanContentScroll="True"  SelectedItem="{Binding SelectedListItem, Mode=TwoWay}"/>
         </StackPanel>
@@ -80,8 +79,8 @@
             <Label x:Name="detailsTitle" Content="Details:" FontSize="14" FontWeight="Bold"></Label>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -90,13 +89,13 @@
                 </Grid.RowDefinitions>
 
                 <Label x:Name="cloudsTitle" Grid.Column="0" Grid.Row="0" Content="Clouds:" FontWeight="Bold"></Label>
-                <Label x:Name="clouds" Grid.Column="1" Grid.Row="0" Content="{Binding SelectedListItem.weather[0].description}" FontWeight="Bold"></Label>
+                <Label x:Name="clouds" Grid.Column="1" Grid.Row="0" Content="{Binding SelectedListItem.Weather[0].Description}" FontWeight="Bold"></Label>
 
                 <Label x:Name="windDirectionTitle" Grid.Column="0" Grid.Row="1" Content="Wind direction:" FontWeight="Bold"></Label>
-                <Label x:Name="windDegree" Grid.Column="1" Grid.Row="1" Content="{Binding SelectedListItem.wind.deg, Converter={StaticResource WindAngleToDirectionCoverter}}" FontWeight="Bold"></Label>
+                <Label x:Name="windDegree" Grid.Column="1" Grid.Row="1" Content="{Binding SelectedListItem.Wind.Deg, Converter={StaticResource WindAngleToDirectionCoverter}}" FontWeight="Bold"></Label>
 
                 <Label x:Name="windSpeedTitle" Grid.Column="0" Grid.Row="2" Content="Wind speed:" FontWeight="Bold"></Label>
-                <Label x:Name="windSpeed" Grid.Column="1" Grid.Row="2" Content="{Binding SelectedListItem.wind.speed, Converter={StaticResource MeterPerSecToKmPerHourConverter}}" FontWeight="Bold"></Label>
+                <Label x:Name="windSpeed" Grid.Column="1" Grid.Row="2" Content="{Binding SelectedListItem.Wind.Speed, Converter={StaticResource MeterPerSecToKmPerHourConverter}}" FontWeight="Bold"></Label>
             </Grid>
         </StackPanel>
     </Grid>
