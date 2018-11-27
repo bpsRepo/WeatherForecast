@@ -2,6 +2,9 @@
 
 namespace WeatherForecast.Model
 {
+    /// <summary>
+    /// Represent root object - generated class
+    /// </summary>
     public class RootObject
     {
         public string cod { get; set; }

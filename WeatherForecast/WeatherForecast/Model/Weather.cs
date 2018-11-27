@@ -1,6 +1,9 @@
 ﻿
 namespace WeatherForecast.Model
 {
+    /// <summary>
+    /// Represent weather - generated class
+    /// </summary>
     public class Weather
     {
         public int id { get; set; }

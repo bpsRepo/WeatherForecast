@@ -2,6 +2,9 @@
 
 namespace WeatherForecast.Model
 {
+    /// <summary>
+    /// Represent list - generated class
+    /// </summary>
     public class List
     {
         public int dt { get; set; }

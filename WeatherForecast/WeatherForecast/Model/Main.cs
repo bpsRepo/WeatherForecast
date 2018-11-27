@@ -1,6 +1,9 @@
 ﻿
 namespace WeatherForecast.Model
 {
+    /// <summary>
+    /// Represent main data - generated class
+    /// </summary>
     public class Main
     {
         public double temp { get; set; }
