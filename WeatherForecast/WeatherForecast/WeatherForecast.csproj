@@ -60,22 +60,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="ViewModel\BaseClasses\ViewModelBase.cs" />
+    <Compile Include="ViewModel\WeatherForecastVM.cs" />
+    <Compile Include="View\WeatherForecastView.xaml.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DAL\IDataCollector.cs" />
     <Compile Include="DAL\IDataParser.cs" />
-    <Compile Include="DAL\JSONCollector.cs" />
+    <Compile Include="DAL\LiveDataCollector.cs" />
     <Compile Include="DAL\JSONParser.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="View\WeatherForecastView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\City.cs" />
@@ -115,10 +114,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="sample.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
