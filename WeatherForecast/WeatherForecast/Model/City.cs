@@ -1,6 +1,9 @@
 ﻿
 namespace WeatherForecast.Model
 {
+    /// <summary>
+    /// Represent city - generated class
+    /// </summary>
     public class City
     {
         public int id { get; set; }
