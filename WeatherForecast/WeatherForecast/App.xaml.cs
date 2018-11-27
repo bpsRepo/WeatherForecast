@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
+using Unity;
 using WeatherForecast.DAL;
 using WeatherForecast.View;
-using WeatherForecast.ViewModel;
 
 namespace WeatherForecast
 {
@@ -20,10 +16,20 @@ namespace WeatherForecast
         {
             try
             {
-                WeatherForecastVM weatherForecastVM = new WeatherForecastVM(bool.TrueString.Equals(ConfigurationManager.AppSettings["runWithOnlineData"], StringComparison.InvariantCultureIgnoreCase));
 
-                WeatherForecastView weatherForecastView = new WeatherForecastView(weatherForecastVM);
+                UnityContainer objectContainer = new UnityContainer();
+
+                Type actualDataCollector = Type.GetType(ConfigurationManager.AppSettings["ActualDataCollector"]);
+
+                Type iDataCollector = Type.GetType(ConfigurationManager.AppSettings["IDataCollector"]);
+
+                objectContainer.RegisterType(iDataCollector, actualDataCollector, string.Empty, null);
+
+                objectContainer.RegisterType<IDataParser, JSONParser>();
+
+                WeatherForecastView weatherForecastView = objectContainer.Resolve<WeatherForecastView>();
                 weatherForecastView.Show();
+
             }
             catch (Exception ex)
             {

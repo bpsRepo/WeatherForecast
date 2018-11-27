@@ -5,6 +5,7 @@ using WeatherForecast.Model;
 using WeatherForecast.ViewModel.BaseClasses;
 using System.Threading.Tasks;
 
+
 namespace WeatherForecast.ViewModel
 {
     /// <summary>
@@ -12,24 +13,16 @@ namespace WeatherForecast.ViewModel
     /// </summary>
     public class WeatherForecastVM : ViewModelBase
     {
+
         /// <summary>
         /// Constructor for WeatherForecast ViewModel
         /// </summary>
-        /// <param name="useOnlineData">True if it's use online data - otherwise it's use a sample file</param>
-        public WeatherForecastVM(bool useOnlineData)
+        /// <param name="dataCollector">A data collector class</param>
+        /// <param name="dataParser">A parser class</param>
+        public WeatherForecastVM(IDataCollector dataCollector, IDataParser dataParser)
         {
-            objectContainer = new UnityContainer();
-
-            if (useOnlineData)
-            {
-                objectContainer.RegisterType<IDataCollector, LiveDataCollector>();                
-            }
-            else
-            {
-                objectContainer.RegisterType<IDataCollector, FileDataCollector>();
-            }
-
-            objectContainer.RegisterType<IDataParser, JSONParser>();
+            this.dataCollector = dataCollector;
+            this.dataParser = dataParser;
         }
 
         /// <summary>
@@ -40,17 +33,12 @@ namespace WeatherForecast.ViewModel
         {
             return Task.Run(() =>
             {
-                dataCollector = objectContainer.Resolve<IDataCollector>();
-                dataParser = objectContainer.Resolve<IDataParser>();
-
                 string collectedData = dataCollector.Collect();
                 this.List = new ObservableCollection<List>(dataParser.ParseWeatherForecastData(collectedData).list);
             });
         }
 
         #region Parameters
-
-        private IUnityContainer objectContainer;
 
         private IDataParser dataParser;
 
