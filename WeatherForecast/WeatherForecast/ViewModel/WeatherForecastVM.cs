@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using Unity;
 using WeatherForecast.DAL;
 using WeatherForecast.Model;
 using WeatherForecast.ViewModel.BaseClasses;
 using System.Threading.Tasks;
-using Unity;
 
 namespace WeatherForecast.ViewModel
 {
@@ -20,12 +20,22 @@ namespace WeatherForecast.ViewModel
             objectContainer = new UnityContainer();
             objectContainer.RegisterType<IDataCollector, LiveDataCollector>();
             objectContainer.RegisterType<IDataParser, JSONParser>();
+        }
 
-            dataCollector = objectContainer.Resolve<IDataCollector>();
-            dataParser = objectContainer.Resolve<IDataParser>();
+        /// <summary>
+        /// Initialize the list property
+        /// </summary>
+        /// <returns></returns>
+        private Task Initialize()
+        {
+            return Task.Run(() =>
+            {
+                dataCollector = objectContainer.Resolve<IDataCollector>();
+                dataParser = objectContainer.Resolve<IDataParser>();
 
-            string collectedData = dataCollector.Collect();
-            this.List = new ObservableCollection<List>(dataParser.ParseWeatherForecastData(collectedData).list);
+                string collectedData = dataCollector.Collect();
+                this.List = new ObservableCollection<List>(dataParser.ParseWeatherForecastData(collectedData).list);
+            });
         }
 
         #region Parameters
@@ -40,11 +50,31 @@ namespace WeatherForecast.ViewModel
 
         private List selectedListItem;
 
+        private RelayCommand formLoadedCommand;
+
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// Form loaded command property
+        /// </summary>
+        public RelayCommand FormLoadedCommand
+        {
+            get
+            {
+                return formLoadedCommand
+                  ?? (formLoadedCommand = new RelayCommand(
+                    async (param) =>
+                    {
+                        await Initialize();
+                    }));
+            }
+        }
 
+        /// <summary>
+        /// List of weather forecast data
+        /// </summary>
         public ObservableCollection<List> List
         {
             get { return list; }
@@ -55,6 +85,9 @@ namespace WeatherForecast.ViewModel
             }
         }
 
+        /// <summary>
+        /// Represent a selected listitem
+        /// </summary>
         public List SelectedListItem
         {
             get { return selectedListItem; }

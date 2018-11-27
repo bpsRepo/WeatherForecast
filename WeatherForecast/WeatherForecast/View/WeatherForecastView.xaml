@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherForecast.View"
         xmlns:model="clr-namespace:WeatherForecast.Model"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="WeatherForecastView" Height="800" Width="800">
- 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding FormLoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Window.Resources>        
         <Style TargetType="ListBoxItem" x:Key="itemStyle">
             <Style.Triggers>
