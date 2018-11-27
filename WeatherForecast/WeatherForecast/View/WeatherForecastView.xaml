@@ -5,16 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherForecast.View"
         xmlns:model="clr-namespace:WeatherForecast.Model"
+        xmlns:converters="clr-namespace:WeatherForecast.View.Converters"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="WeatherForecastView" Height="800" Width="800">
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding FormLoadedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Window.Resources>        
+    <Window.Resources>
+        <converters:KelvinToCelsiusConverter x:Key="KelvinToCelsiusConverter" ></converters:KelvinToCelsiusConverter>
+        <converters:MeterPerSecToKmPerHourConverter x:Key="MeterPerSecToKmPerHourConverter" ></converters:MeterPerSecToKmPerHourConverter>
+        <converters:WindAngleToDirectionCoverter x:Key="WindAngleToDirectionCoverter" ></converters:WindAngleToDirectionCoverter>
+
         <Style TargetType="ListBoxItem" x:Key="itemStyle">
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True" >
@@ -39,9 +45,9 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="{Binding dt_txt}" Grid.Column="0" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding main.temp_min}" Grid.Column="1" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap" Foreground="Blue"/>
-                <TextBlock Text="{Binding main.temp}" Grid.Column="2" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap"/>
-                <TextBlock Text="{Binding main.temp_max}" Grid.Column="3" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap" Foreground="Red"/>
+                <TextBlock Text="{Binding main.temp_min, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="1" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap" Foreground="Blue"/>
+                <TextBlock Text="{Binding main.temp, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="2" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding main.temp_max, Converter={StaticResource KelvinToCelsiusConverter}}" Grid.Column="3" HorizontalAlignment="Stretch" FontWeight="Bold" Margin="5,0,5,0" TextWrapping="Wrap" Foreground="Red"/>
 
             </Grid>
         </DataTemplate>
@@ -51,7 +57,23 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="300"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="forecastListBox" Grid.Column="0" Foreground="Gray" ItemContainerStyle="{StaticResource itemStyle}" IsHitTestVisible="true"  ItemsSource="{Binding List}" ItemTemplate="{StaticResource myForecastcastViewerTemplate}" IsManipulationEnabled="True" ScrollViewer.CanContentScroll="True"  SelectedItem="{Binding SelectedListItem, Mode=TwoWay}"/>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical"  HorizontalAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Date/Time</Label>
+                <Label Grid.Column="1">Min temp</Label>
+                <Label Grid.Column="2">Avg. temp</Label>
+                <Label Grid.Column="3">Max temp</Label>
+            </Grid>
+            <ListBox x:Name="forecastListBox" Foreground="Gray" BorderThickness="0,1,0,0" ItemContainerStyle="{StaticResource itemStyle}" IsHitTestVisible="true"  ItemsSource="{Binding List}" ItemTemplate="{StaticResource myForecastcastViewerTemplate}" IsManipulationEnabled="True" ScrollViewer.CanContentScroll="True"  SelectedItem="{Binding SelectedListItem, Mode=TwoWay}"/>
+        </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Background="LightSteelBlue" HorizontalAlignment="Stretch">
 
@@ -70,11 +92,11 @@
                 <Label x:Name="cloudsTitle" Grid.Column="0" Grid.Row="0" Content="Clouds:" FontWeight="Bold"></Label>
                 <Label x:Name="clouds" Grid.Column="1" Grid.Row="0" Content="{Binding SelectedListItem.weather[0].description}" FontWeight="Bold"></Label>
 
-                <Label x:Name="windDegTitle" Grid.Column="0" Grid.Row="1" Content="Wind degree:" FontWeight="Bold"></Label>
-                <Label x:Name="windDegree" Grid.Column="1" Grid.Row="1" Content="{Binding SelectedListItem.wind.deg}" FontWeight="Bold"></Label>
+                <Label x:Name="windDirectionTitle" Grid.Column="0" Grid.Row="1" Content="Wind direction:" FontWeight="Bold"></Label>
+                <Label x:Name="windDegree" Grid.Column="1" Grid.Row="1" Content="{Binding SelectedListItem.wind.deg, Converter={StaticResource WindAngleToDirectionCoverter}}" FontWeight="Bold"></Label>
 
                 <Label x:Name="windSpeedTitle" Grid.Column="0" Grid.Row="2" Content="Wind speed:" FontWeight="Bold"></Label>
-                <Label x:Name="windSpeed" Grid.Column="1" Grid.Row="2" Content="{Binding SelectedListItem.wind.speed}" FontWeight="Bold"></Label>
+                <Label x:Name="windSpeed" Grid.Column="1" Grid.Row="2" Content="{Binding SelectedListItem.wind.speed, Converter={StaticResource MeterPerSecToKmPerHourConverter}}" FontWeight="Bold"></Label>
             </Grid>
         </StackPanel>
     </Grid>
